@@ -20,8 +20,9 @@ const NoteList = ({ noteIds , user ,setPage, page}) => {
                 return (
                     <Container>
                         <div style={{ textAlign: 'center', height: '100vh', width: '100%', alignItems: 'center' }}>
-                        <div style = {{textAlign: "center"}}><img src='notepad.png' alt='closet' style={{ height: '20%', marginTop: "25%"}}></img> </div>
-                        <h2 style={{ color: '#707070', fontSize: '20px', textAlign: 'center', fontFamily: 'Proxima Nova, sans-serif', marginTop: '10%' }}>Looks like you have nothing to do! </h2>
+                        <h2 style={{ color: '#707070', fontSize: '20px', textAlign: 'center', fontFamily: 'Proxima Nova, sans-serif', marginTop: '20%', fontWeight: "bolder"}}>USE THE BUTTON BELOW TO ADD A TASK! </h2>
+                        <div style = {{textAlign: "center"}}><img src='notepad.png' alt='closet' style={{ height: '10%' }}></img></div>
+                        
                         </div>
                     </Container>
                 )
@@ -64,8 +65,9 @@ const NoteList = ({ noteIds , user ,setPage, page}) => {
             return  (     
             <Container>
                     <div style={{ textAlign: 'center', height: '100vh', width: '100%', alignItems: 'center' }}>
-                    <div style = {{textAlign: "center"}}><img src='notepad.png' alt='closet' style={{ height: '20%' , marginTop: "25%"}}></img></div>
-                    <h2 style={{ color: '#707070', fontSize: '20px', textAlign: 'center', fontFamily: 'Proxima Nova, sans-serif', marginTop: '10%' }}>Looks like you have nothing to do! </h2>
+                    <h2 style={{ color: '#707070', fontSize: '20px', textAlign: 'center', fontFamily: 'Proxima Nova, sans-serif', marginTop: '20%', fontWeight: "bolder"}}>USE THE BUTTON BELOW TO ADD A TASK! </h2>
+                    <div style = {{textAlign: "center"}}><img src='notepad.png' alt='closet' style={{ height: '20%'}}></img></div>
+                    
                     </div>
             </Container>
                  )
@@ -75,7 +77,7 @@ const NoteList = ({ noteIds , user ,setPage, page}) => {
         return(
         <Container>
         <div style={{ textAlign: 'center', height: '100vh', width: '100%', alignItems: 'center' }}>
-       <img src='Completed.png' alt='closet' style={{ height: '20%', left: '50%', marginTop: '10%' }}></img>
+       <img src='Completed.png' alt='closet' style={{ height: '20%', left: '50%'}}></img>
         </div>
         </Container>
         )

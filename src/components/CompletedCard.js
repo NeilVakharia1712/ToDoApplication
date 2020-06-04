@@ -90,7 +90,7 @@ console.log(getCompletetionTime(user.uid, noteId))
             </Grid>
             <Grid item = {true} xs = {11}></Grid>
             <Grid item = {true} xs={1}>
-                <IconButton 
+                <IconButton style = {{transform: 'scale(2)'}}
                 align = "right" onClick = {() => {
                     firebase.database().ref('Users/'+ user.uid+'/Completed/'+ noteId).remove();
                     firebase.database().ref('notes/'+ noteId).remove();

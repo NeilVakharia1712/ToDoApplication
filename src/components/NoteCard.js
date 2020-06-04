@@ -82,11 +82,20 @@ const NoteCard = ({ noteId, user, setPage}) => {
 	};
 
 	const addItem = () => {
-        if(note.description && note.task && note.date)
-            {
-                
-                handleClose()
-            }
+    var today = new Date().getTime()
+		var input = new Date(note.date).getTime()
+		if(note.description && note.task && note.date && input > today)
+      {
+        firebase.database().ref('notes/'+ noteId).set(
+          {
+              "date": note.date ,
+              "description": note.description, 
+              "task": note.task,
+              "time" : ''
+          }
+        );
+         handleClose()
+			}
         
     };
 
@@ -219,10 +228,11 @@ const NoteCard = ({ noteId, user, setPage}) => {
                 </IconButton>
       </Card>
       <ItemForm open = {open}/>
-      <Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' >
+      <Dialog CloseOnEscape = {false} open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' >
 				<IconButton style = {{marginLeft: "90%"}} onClick={() => { handleClose() }}> <CloseIcon/> </IconButton>
                 <DialogTitle style = {{textAlign: "center" ,  fontFamily: 'Proxima Nova, sans-serif'}} id='alert-dialog-title'>UPDATE TASK</DialogTitle>
 				<DialogContent> 
+        <Typography style = {{fontFamily: 'Proxima Nova, sans-serif'}}> Please make sure that all the fields are filled out and you have not selected a time which has already passed!</Typography>
 					<List>
 						<ListItem>
 							<TextField label="Task" value={note.task} variant="outlined" onChange={handleChange('task')  } />

@@ -14,6 +14,7 @@ import {
 	TextField,
 	Fab,
 	Slide,
+	Typography,
 	Fade,
 	IconButton
 } from '@material-ui/core';
@@ -111,6 +112,7 @@ const ItemForm = () => {
 			<Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' fullScreen={fullScreen} TransitionComponent={fullScreen ? SlideTransition : FadeTransition}>
 				<DialogTitle  style = {{textAlign: "center" ,  fontFamily: 'Proxima Nova, sans-serif'}}id='alert-dialog-title'>Add Task To Your List</DialogTitle>
 				<DialogContent>
+					<Typography style = {{fontFamily: 'Proxima Nova, sans-serif'}}> Please make sure that all the fields are filled out and you have not selected a time which has already passed!</Typography>
 					<List>
 						<ListItem>
 							<TextField label="Task" value={note.name} variant="outlined" onChange={handleChange('task')} />

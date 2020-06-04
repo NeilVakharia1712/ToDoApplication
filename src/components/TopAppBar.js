@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Grid , Avat
 import { signInWithGoogle, getUser } from '../utils/FirebaseAuthUtils';
 import AppDrawer from './AppDrawer';
 import { makeStyles } from "@material-ui/core/styles";
-import LogoutPopover from './LogoutPopover';
+
 
 const useStyles = makeStyles({
   appBar: {
