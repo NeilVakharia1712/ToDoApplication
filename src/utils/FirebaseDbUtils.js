@@ -3,34 +3,34 @@ import 'firebase/database';
 
 const db = firebase.database();
 
-const getUserProductsInfo = (userId, setProductIds) => {
-    const getProductInfo = snapshot => {
+const getUsernotesInfo = (userId, setnoteIds) => {
+    const getnoteInfo = snapshot => {
         if (snapshot.val()) {
-          let productIdArr = Object.keys(snapshot.val()).sort(function(a,b) 
+          let noteIdArr = Object.keys(snapshot.val()).sort(function(a,b) 
             {
                
                 return snapshot.val()[a] - snapshot.val()[b]
             }
             );
           
-            setProductIds(productIdArr);
+            setnoteIds(noteIdArr);
         }
         else{
             //const updateUser = {};
-            //updateUser[`/Users/${usedId}/Products/` + 0] = true;
+            //updateUser[`/Users/${usedId}/notes/` + 0] = true;
             //db.ref().update(updateUser);
-            setProductIds([0])
+            setnoteIds([0])
 
         }
     };
 
-    const userProductDb = db.ref(`Users/${userId}/Products`).orderByValue();
-    userProductDb.on("value", getProductInfo, error => alert(error));
+    const usernoteDb = db.ref(`Users/${userId}/notes`).orderByValue();
+    usernoteDb.on("value", getnoteInfo, error => alert(error));
 }
 
-const getCompletetionTime = (userId, productId) => {
-    const productDb = db.ref("User/" + userId + "/Completed/"+productId);
-    productDb.once(
+const getCompletetionTime = (userId, noteId) => {
+    const noteDb = db.ref("User/" + userId + "/Completed/"+noteId);
+    noteDb.once(
         "value",
         snapshot => {
             return snapshot.val()
@@ -41,51 +41,51 @@ const getCompletetionTime = (userId, productId) => {
 
 const getCompletedNoteInfo = (userId, setCompletedIds) => {
 
-    const getProductInfo = snapshot => {
+    const getnoteInfo = snapshot => {
         if (snapshot.val()) {
-          let productIdArr = Object.keys(snapshot.val()).sort(function(a,b) 
+          let noteIdArr = Object.keys(snapshot.val()).sort(function(a,b) 
             {
                
                 return snapshot.val()[a] - snapshot.val()[b]
             }
             );
           
-            setCompletedIds(productIdArr);
+            setCompletedIds(noteIdArr);
         }
         else{
             //const updateUser = {};
-            //updateUser[`/Users/${usedId}/Products/` + 0] = true;
+            //updateUser[`/Users/${usedId}/notes/` + 0] = true;
             //db.ref().update(updateUser);
             setCompletedIds([0])
 
         }
     };
 
-    const userProductDb = db.ref(`Users/${userId}/Completed`).orderByValue();
-    userProductDb.on("value", getProductInfo, error => alert(error));
+    const usernoteDb = db.ref(`Users/${userId}/Completed`).orderByValue();
+    usernoteDb.on("value", getnoteInfo, error => alert(error));
 }
 
-const getProductInfo = (productId, setProduct) => {
-    const productDb = db.ref("Products/" + productId);
-    productDb.once(
+const getnoteInfo = (noteId, setnote) => {
+    const noteDb = db.ref("notes/" + noteId);
+    noteDb.once(
         "value",
         snapshot => {
-            setProduct(snapshot.val());
+            setnote(snapshot.val());
         },
         error => alert(error)
     );
 }
 
 
-const addProduct = (usedId, product) =>{
-    const productId = db.ref().child('Products').push().key;
-    const updateProduct = {};
+const addnote = (usedId, note) =>{
+    const noteId = db.ref().child('notes').push().key;
+    const updatenote = {};
     const updateUser = {};
-    updateProduct['/Products/' + productId] = product;
-    updateUser[`/Users/${usedId}/Products/` + productId] = new Date(product.date).getTime();
-    db.ref().update(updateProduct);
+    updatenote['/notes/' + noteId] = note;
+    updateUser[`/Users/${usedId}/notes/` + noteId] = new Date(note.date).getTime();
+    db.ref().update(updatenote);
     db.ref().update(updateUser);
-    return productId
+    return noteId
 }
 
-export {getUserProductsInfo, getProductInfo, addProduct, getCompletedNoteInfo, getCompletetionTime}
+export {getUsernotesInfo, getnoteInfo, addnote, getCompletedNoteInfo, getCompletetionTime}

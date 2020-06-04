@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "rbx/index.css";
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Grid, CardContent, Typography, CardMedia, CardActionArea, IconButton } from "@material-ui/core";
-import { getProductInfo , getCompletetionTime} from '../utils/FirebaseDbUtils'
+import { getnoteInfo , getCompletetionTime} from '../utils/FirebaseDbUtils'
 import firebase from "firebase/app";
 import "firebase/storage";
 import ItemForm from "./ItemForm"
@@ -10,7 +10,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import moment from 'moment';
 import { render } from "@testing-library/react";
 import EditIcon from '@material-ui/icons/Edit';
-import { addProduct } from '../utils/FirebaseDbUtils'
+import { addnote } from '../utils/FirebaseDbUtils'
 import { getUser } from '../utils/FirebaseAuthUtils'
 import { updateUserState } from "../utils/FirebaseAuthUtils";
 import CloseIcon from '@material-ui/icons/Close';
@@ -46,19 +46,19 @@ const useStyles = makeStyles({
 });
 
 
-const CompletedCard = ({ productId, user, setPage}) => {
-console.log(getCompletetionTime(user.uid, productId))
+const CompletedCard = ({ noteId, user, setPage}) => {
+console.log(getCompletetionTime(user.uid, noteId))
   const classes = useStyles();
-  const [product, setProduct] = useState(null);
+  const [note, setnote] = useState(null);
   useEffect(() => {
-    if (productId) {
-      getProductInfo(productId, setProduct)
+    if (noteId) {
+      getnoteInfo(noteId, setnote)
     }
   }, []);
 
   
-  if (product) {
-    var my_string = new Date(product.date).toString().split(" ")
+  if (note) {
+    var my_string = new Date(note.date).toString().split(" ")
     return (
         
       <Card style = {{marginTop : "10px"}} >
@@ -74,7 +74,7 @@ console.log(getCompletetionTime(user.uid, productId))
                 <IconButton style = {{color : "#67A6FC", float: "left"}}>
                     <CheckCircleOutlineIcon />
                 </IconButton>
-                {product.task}
+                {note.task}
                 
               </Typography>
               
@@ -92,8 +92,8 @@ console.log(getCompletetionTime(user.uid, productId))
             <Grid item = {true} xs={1}>
                 <IconButton 
                 align = "right" onClick = {() => {
-                    firebase.database().ref('Users/'+ user.uid+'/Completed/'+ productId).remove();
-                    firebase.database().ref('Products/'+ productId).remove();
+                    firebase.database().ref('Users/'+ user.uid+'/Completed/'+ noteId).remove();
+                    firebase.database().ref('notes/'+ noteId).remove();
                 }} 
                 >
                     <DeleteForeverIcon />

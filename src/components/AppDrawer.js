@@ -54,13 +54,13 @@ const AppDrawer = props => {
 					<ListItemIcon> 
                     <MenuBookIcon />
                     </ListItemIcon>
-					<ListItemText primary = {"Active Notes"} />
+					<ListItemText primary = {"Active Tasks"} />
 				</ListItem>
 				<ListItem button onClick={() => { props.setPage("completed") }}> 
                     <ListItemIcon> 
                     <AssignmentTurnedInIcon />
                     </ListItemIcon>
-					<ListItemText primary = {"Completed Notes"}/>
+					<ListItemText primary = {"Completed Tasks"}/>
 				</ListItem>
 				<ListItem button onClick={() => {signOut()}}>
 					<ListItemIcon><ExitToAppIcon/></ListItemIcon>

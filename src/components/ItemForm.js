@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add'
-import { addProduct } from '../utils/FirebaseDbUtils'
+import { addnote } from '../utils/FirebaseDbUtils'
 import { getUser } from '../utils/FirebaseAuthUtils'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import '../App.css';
@@ -57,7 +57,7 @@ const ItemForm = () => {
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
-	const [product, setProduct] = useState({
+	const [note, setnote] = useState({
 		task: '',
 		description: '',
         date: '',
@@ -76,7 +76,7 @@ const ItemForm = () => {
 
 	const initialState = () => {
 		setProgress(0);
-		setProduct({
+		setnote({
 			task: '',
             description: '',
             date: '',
@@ -87,15 +87,15 @@ const ItemForm = () => {
 
 	const handleChange = prop => event => {
         
-        setProduct({ ...product, [prop]: event.target.value });
+        setnote({ ...note, [prop]: event.target.value });
 	};
 
 	const addItem = () => {
 		var today = new Date().getTime()
-		var input = new Date(product.date).getTime()
-		if(product.description && product.task && product.date && input > today)
+		var input = new Date(note.date).getTime()
+		if(note.description && note.task && note.date && input > today)
             {
-                addProduct(getUser().uid, product)
+                addnote(getUser().uid, note)
                 handleClose()
 			}
         
@@ -109,14 +109,14 @@ const ItemForm = () => {
 				</IconButton>
 			</div>
 			<Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' fullScreen={fullScreen} TransitionComponent={fullScreen ? SlideTransition : FadeTransition}>
-				<DialogTitle id='alert-dialog-title'>Add Task To Your List</DialogTitle>
+				<DialogTitle  style = {{textAlign: "center" ,  fontFamily: 'Proxima Nova, sans-serif'}}id='alert-dialog-title'>Add Task To Your List</DialogTitle>
 				<DialogContent>
 					<List>
 						<ListItem>
-							<TextField label="Task" value={product.name} variant="outlined" onChange={handleChange('task')} />
+							<TextField label="Task" value={note.name} variant="outlined" onChange={handleChange('task')} />
 						</ListItem>
 						<ListItem>
-							<TextField multiline label="Description" value={product.description} variant="outlined" onChange={handleChange('description')} />
+							<TextField multiline label="Description" value={note.description} variant="outlined" onChange={handleChange('description')} />
 						</ListItem>
                         <ListItem>
                         <TextField

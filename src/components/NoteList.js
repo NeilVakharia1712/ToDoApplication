@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "rbx/index.css";
-import ProductCard from "./ProductCard";
+import NoteCard from "./NoteCard";
 import CompletedCard from "./CompletedCard";
 import { Grid, Container, Typography } from "@material-ui/core";
 import { updateUserState } from "../utils/FirebaseAuthUtils";
 
-const ProductList = ({ productIds , user ,setPage, page}) => {
+const NoteList = ({ noteIds , user ,setPage, page}) => {
     const [my_user, setUser] = useState(null)
     useEffect(() => {
         if(user) {
             updateUserState(setUser) 
         }
     },[my_user] );
-    console.log(productIds)
-    if (productIds) {
-        if(productIds[0] == 0){
+    console.log(noteIds)
+    if (noteIds) {
+        if(noteIds[0] == 0){
             if (page === "active")
             {
                 return (
@@ -44,13 +44,13 @@ const ProductList = ({ productIds , user ,setPage, page}) => {
                 : <Typography style = {{textAlign : "center", fontFamily: 'Gill Sans', fontWeight: 600, color: 'grey',letterSpacing: '4px' }}> COMPLETED</Typography>}
             {
                 
-                productIds.map(productId => {
+                noteIds.map(noteId => {
                 return (
-                    <Grid key={productId} item= {true} xs = {12}>
+                    <Grid key={noteId} item= {true} xs = {12}>
                     {
                         page === "active"?
-                        <ProductCard productId={productId} user = {user} setPage = {setPage} />: 
-                        <CompletedCard productId={productId} user = {user} setPage = {setPage} />
+                        <NoteCard noteId={noteId} user = {user} setPage = {setPage} />: 
+                        <CompletedCard noteId={noteId} user = {user} setPage = {setPage} />
                     }
                     </Grid>
                 );
@@ -82,4 +82,4 @@ const ProductList = ({ productIds , user ,setPage, page}) => {
     }
   }
 };
-export default ProductList;
+export default NoteList;

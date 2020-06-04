@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "rbx/index.css";
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Grid, CardContent, Typography, CardMedia, CardActionArea, IconButton, Container} from "@material-ui/core";
-import { getProductInfo, getCompletetionTime} from '../utils/FirebaseDbUtils'
+import { getnoteInfo, getCompletetionTime} from '../utils/FirebaseDbUtils'
 import firebase from "firebase/app";
 import "firebase/storage";
 import ItemForm from "./ItemForm"
@@ -10,7 +10,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import moment from 'moment';
 import { render } from "@testing-library/react";
 import EditIcon from '@material-ui/icons/Edit';
-import { addProduct } from '../utils/FirebaseDbUtils'
+import { addnote } from '../utils/FirebaseDbUtils'
 import { getUser } from '../utils/FirebaseAuthUtils'
 import { updateUserState } from "../utils/FirebaseAuthUtils";
 import CloseIcon from '@material-ui/icons/Close';
@@ -49,9 +49,9 @@ const useStyles = makeStyles({
 });
 
 
-const ProductCard = ({ productId, user, setPage}) => {
+const NoteCard = ({ noteId, user, setPage}) => {
   const classes = useStyles();
-  const [product, setProduct] = useState(null);
+  const [note, setnote] = useState(null);
   const [open, setOpen] = useState(false);
   const [my_user, setUser] = useState(null)
   const handleClickOpen = () => {
@@ -67,10 +67,10 @@ const ProductCard = ({ productId, user, setPage}) => {
 
 	const initialState = () => {
 		setProgress(0);
-		setProduct({
-			task: product.task,
-            description: product.description,
-            date: product.date,
+		setnote({
+			task: note.task,
+            description: note.description,
+            date: note.date,
             time: 'true', 
 
 		})
@@ -78,11 +78,11 @@ const ProductCard = ({ productId, user, setPage}) => {
 
 	const handleChange = prop => event => {
         
-        setProduct({ ...product, [prop]: event.target.value });
+        setnote({ ...note, [prop]: event.target.value });
 	};
 
 	const addItem = () => {
-        if(product.description && product.task && product.date)
+        if(note.description && note.task && note.date)
             {
                 
                 handleClose()
@@ -99,15 +99,15 @@ const ProductCard = ({ productId, user, setPage}) => {
 
 
   useEffect(() => {
-    if (productId) {
-      getProductInfo(productId, setProduct)
+    if (noteId) {
+      getnoteInfo(noteId, setnote)
     }
   }, []);
 
 
-  if (product) {
-    var output_dat = product.date.split("T")
-    var dates = new Date(product.date).getTime()
+  if (note) {
+    var output_dat = note.date.split("T")
+    var dates = new Date(note.date).getTime()
     //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var today_date = new Date().getTime()
     var my_date = new Date()
@@ -148,8 +148,8 @@ const ProductCard = ({ productId, user, setPage}) => {
     return (
       <div>
       <Card container style = {{marginTop : "10px"}} wrap = "wrap">
-      <IconButton onClick = {() => {firebase.database().ref('Users/'+ user.uid+'/Products/'+ productId).remove();
-                    firebase.database().ref('Products/'+ productId).remove();}}>
+      <IconButton onClick = {() => {firebase.database().ref('Users/'+ user.uid+'/notes/'+ noteId).remove();
+                    firebase.database().ref('notes/'+ noteId).remove();}}>
           <CloseIcon style = {{float: "left"}}/>
         </IconButton>
         <Typography gutterBottom
@@ -167,7 +167,7 @@ const ProductCard = ({ productId, user, setPage}) => {
               align="left"
               style = {{fontSize: '25px' , fontWeight: "bold", fontFamily: 'Proxima Nova, sans-serif'}}
               >
-                {product.task}
+                {note.task}
                 <IconButton onClick={handleClickOpen}
                 >
                     <EditIcon style = {{width: "25px", height: "25px"}} />
@@ -182,7 +182,7 @@ const ProductCard = ({ productId, user, setPage}) => {
                 align = "left"
               >
                  
-                {product.description}
+                {note.description}
                 
               </Typography>
             
@@ -202,17 +202,17 @@ const ProductCard = ({ productId, user, setPage}) => {
                 style = {{ color: "#6699FF", float: 'right', marginRight:'3%', marginBottom: '2%'}} onClick = {() => {
                     const db = firebase.database();
                     const updateUser = {};
-                    updateUser['Users/'+ user.uid+'/Completed/'+ productId] = new Date(product.date);
+                    updateUser['Users/'+ user.uid+'/Completed/'+ noteId] = new Date(note.date);
                     db.ref().update(updateUser);
-                    firebase.database().ref('Products/'+ productId).set(
+                    firebase.database().ref('notes/'+ noteId).set(
                       {
                           "date": new Date().getTime() ,
-                          "description": product.description, 
-                          "task": product.task,
+                          "description": note.description, 
+                          "task": note.task,
                           "time" : new Date()
                       }
                     );
-                    db.ref('Users/'+ user.uid+'/Products/'+ productId).remove();
+                    db.ref('Users/'+ user.uid+'/notes/'+ noteId).remove();
                 }}  
                 >
                     <CheckCircleIcon style = {{transform:'scale(3)'}}/>
@@ -221,21 +221,21 @@ const ProductCard = ({ productId, user, setPage}) => {
       <ItemForm open = {open}/>
       <Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' >
 				<IconButton style = {{marginLeft: "90%"}} onClick={() => { handleClose() }}> <CloseIcon/> </IconButton>
-                <DialogTitle id='alert-dialog-title'>UPDATE TASK</DialogTitle>
+                <DialogTitle style = {{textAlign: "center" ,  fontFamily: 'Proxima Nova, sans-serif'}} id='alert-dialog-title'>UPDATE TASK</DialogTitle>
 				<DialogContent> 
 					<List>
 						<ListItem>
-							<TextField label="Task" value={product.task} variant="outlined" onChange={handleChange('task')  } />
+							<TextField label="Task" value={note.task} variant="outlined" onChange={handleChange('task')  } />
 						</ListItem>
 						<ListItem>
-							<TextField multiline label="Description" value={product.description} variant="outlined" onChange={handleChange('description')} />
+							<TextField multiline label="Description" value={note.description} variant="outlined" onChange={handleChange('description')} />
 						</ListItem>
                         <ListItem>
                         <TextField
                                 id="datetime-local"
                                 label="Finish Before"
                                 type="datetime-local"
-                                defaultValue= {product.date}
+                                defaultValue= {note.date}
                                 onChange={handleChange('date')}
                                 className={classes.textField}
                                 InputLabelProps={{
@@ -246,9 +246,9 @@ const ProductCard = ({ productId, user, setPage}) => {
 					</List>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={() => { handleClose() ; firebase.database().ref('Users/'+ user.uid+'/Products/'+ productId).remove();
-                    firebase.database().ref('Products/'+ productId).remove();}}>Delete</Button>
-					<Button variant="contained" color="secondary" onClick={() => {addItem()}}>Submit</Button>
+					<Button onClick={() => { handleClose() ; firebase.database().ref('Users/'+ user.uid+'/notes/'+ noteId).remove();
+                    firebase.database().ref('notes/'+ noteId).remove();}}>Delete</Button>
+					<Button variant="contained" style = {{backgroundColor:"#67A6FC", color: 'white'}} onClick={() => {addItem()}}>Submit</Button>
 				</DialogActions>
 			</Dialog>
 
@@ -260,4 +260,4 @@ const ProductCard = ({ productId, user, setPage}) => {
   }
 };
 
-export default ProductCard;
+export default NoteCard;
