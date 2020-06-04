@@ -115,6 +115,7 @@ const NoteCard = ({ noteId, user, setPage}) => {
 
 
   if (note) {
+    console.log(note.date)
     var output_dat = note.date.split("T")
     var dates = new Date(note.date).getTime()
     //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
