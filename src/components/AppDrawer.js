@@ -14,6 +14,8 @@ import { Badge, Grid, Typography, Divider } from '@material-ui/core';
 import { getUser } from '../utils/FirebaseAuthUtils';
 import { signOut } from '../utils/FirebaseAuthUtils';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 const useStyles = makeStyles({
 	list: {
@@ -48,12 +50,17 @@ const AppDrawer = props => {
 			</List>
 			<Divider />
 			<List>
-				<ListItem button onClick={() => { props.setPage("Active_Notes") }}>
-					<ListItemIcon> <ViewListIcon /></ListItemIcon>
-					<ListItemText Active Notes />
+				<ListItem>
+					<ListItemIcon> 
+                    <MenuBookIcon />
+                    </ListItemIcon>
+					<ListItemText primary = {"Active Notes"} />
 				</ListItem>
-				<ListItem button onClick={() => { props.setPage("Completed_Notes") }}>
-					<ListItemText Completed Notes/>
+				<ListItem>
+                    <ListItemIcon> 
+                    <AssignmentTurnedInIcon />
+                    </ListItemIcon>
+					<ListItemText primary = {"Completed Notes"}/>
 				</ListItem>
 				<ListItem button onClick={() => {signOut()}}>
 					<ListItemIcon><ExitToAppIcon/></ListItemIcon>
