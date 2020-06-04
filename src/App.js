@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { Container } from "@material-ui/core";
+import TopAppBar from "./components/TopAppBar";
+import ItemForm from "./components/ItemForm";
+import ProductList from "./components/ProductList";
+import { updateUserState } from "./utils/FirebaseAuthUtils";
+import { getUserProductsInfo , addProduct, getProductInfo} from "./utils/FirebaseDbUtils.js"
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [productIds, setProductIds] = useState(null);
+
+  // Change user state when the user successfully logged in
+  useEffect(() => {
+    updateUserState(setUser);
+  }, [user]);
+
+  useEffect(() => {
+    if(user){
+      getUserProductsInfo(user.uid, setProductIds)
+    }
+  }, [user]);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Container disableGutters>
+      <TopAppBar user={user} />
+      <ItemForm/>
+      <ProductList productIds={productIds} user = {user} />
+    </Container>
+  ); 
+};
 
 export default App;
