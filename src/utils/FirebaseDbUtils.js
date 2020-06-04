@@ -28,6 +28,43 @@ const getUserProductsInfo = (userId, setProductIds) => {
     userProductDb.on("value", getProductInfo, error => alert(error));
 }
 
+const getCompletetionTime = (userId, productId) => {
+    const productDb = db.ref("User/" + userId + "/Completed/"+productId);
+    productDb.once(
+        "value",
+        snapshot => {
+            return snapshot.val()
+        },
+        error => alert(error)
+    );
+}
+
+const getCompletedNoteInfo = (userId, setCompletedIds) => {
+
+    const getProductInfo = snapshot => {
+        if (snapshot.val()) {
+          let productIdArr = Object.keys(snapshot.val()).sort(function(a,b) 
+            {
+               
+                return snapshot.val()[a] - snapshot.val()[b]
+            }
+            );
+          
+            setCompletedIds(productIdArr);
+        }
+        else{
+            //const updateUser = {};
+            //updateUser[`/Users/${usedId}/Products/` + 0] = true;
+            //db.ref().update(updateUser);
+            setCompletedIds([0])
+
+        }
+    };
+
+    const userProductDb = db.ref(`Users/${userId}/Completed`).orderByValue();
+    userProductDb.on("value", getProductInfo, error => alert(error));
+}
+
 const getProductInfo = (productId, setProduct) => {
     const productDb = db.ref("Products/" + productId);
     productDb.once(
@@ -51,4 +88,4 @@ const addProduct = (usedId, product) =>{
     return productId
 }
 
-export {getUserProductsInfo, getProductInfo, addProduct}
+export {getUserProductsInfo, getProductInfo, addProduct, getCompletedNoteInfo, getCompletetionTime}

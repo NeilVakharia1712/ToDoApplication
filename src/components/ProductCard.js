@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "rbx/index.css";
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, Grid, CardContent, Typography, CardMedia, CardActionArea, IconButton } from "@material-ui/core";
-import { getProductInfo} from '../utils/FirebaseDbUtils'
+import { Card, Grid, CardContent, Typography, CardMedia, CardActionArea, IconButton, Container} from "@material-ui/core";
+import { getProductInfo, getCompletetionTime} from '../utils/FirebaseDbUtils'
 import firebase from "firebase/app";
 import "firebase/storage";
 import ItemForm from "./ItemForm"
@@ -14,6 +14,10 @@ import { addProduct } from '../utils/FirebaseDbUtils'
 import { getUser } from '../utils/FirebaseAuthUtils'
 import { updateUserState } from "../utils/FirebaseAuthUtils";
 import CloseIcon from '@material-ui/icons/Close';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import { Textfit } from 'react-textfit';
+
 
 
 import {
@@ -45,7 +49,7 @@ const useStyles = makeStyles({
 });
 
 
-const ProductCard = ({ productId, user}) => {
+const ProductCard = ({ productId, user, setPage}) => {
   const classes = useStyles();
   const [product, setProduct] = useState(null);
   const [open, setOpen] = useState(false);
@@ -143,83 +147,76 @@ const ProductCard = ({ productId, user}) => {
     
     return (
       <div>
-      <Card style = {{marginTop : "10px"}} >
-        
+      <Card container style = {{marginTop : "10px"}} wrap = "wrap">
+      <IconButton onClick = {() => {firebase.database().ref('Users/'+ user.uid+'/Products/'+ productId).remove();
+                    firebase.database().ref('Products/'+ productId).remove();}}>
+          <CloseIcon style = {{float: "left"}}/>
+        </IconButton>
+        <Typography gutterBottom
+                variant="body2"
+                component="h2" 
+           
+                style = {{fontFamily: 'Proxima Nova, sans-serif', color: "grey", display: 'inline-block', float: 'right' }}>
+                  Complete By {output_dat[1]} on {output_dat[0]} 
+
+        </Typography>
           <CardContent>
-          <Grid container>
-          <Grid item = {true} xs={9} onClick = {() => {
-            }}>
+          <Grid container style = {{width : '100%', height:'100%'}}>
+          <Grid item = {true} xs={12}>
               <Typography gutterBottom variant="subtitle2"
               align="left"
-              style = {{fontSize: '25px' , fontWeight: "bold"}}
+              style = {{fontSize: '25px' , fontWeight: "bold", fontFamily: 'Proxima Nova, sans-serif'}}
               >
                 {product.task}
                 <IconButton onClick={handleClickOpen}
                 >
-                    <EditIcon />
+                    <EditIcon style = {{width: "25px", height: "25px"}} />
                 </IconButton>
               </Typography>
               
-            </Grid>
-            <Grid item = {true}xs={3}>
+            </Grid>           
+            <Grid item = {true} xs={12} wrap="wrap" style = {{height: "90%"}}>
+              
               <Typography
-                gutterBottom
-                variant="body2"
-                component="h2"
-                align="right"
-                color="secondary"
-              >
-                {output_dat[1]} 
-              </Typography>
-              <Typography
-                gutterBottom
-                variant="body2"
-                component="h2"
-                align="right"
-                color="secondary"
-              >
-                {output_dat[0]}
-              </Typography>
-            </Grid>
-           
-            <Grid item = {true} xs={8}>
-              <Typography
-                gutterBottom
-                variant="body2"
-                component="h2"
+                style = {{fontSize: '20px', fontFamily: 'Proxima Nova, sans-serif' }}
                 align = "left"
               >
+                 
                 {product.description}
+                
               </Typography>
+            
             </Grid>
-            <Grid item = {true} xs = {12}></Grid>
-            <Grid item = {true} xs={8}>
-            </Grid>
-            <Grid item = {true} xs = {4}></Grid>
-            <Grid item = {true} xs={11}> 
+            <Grid style = {{marginTop: "5%"}}item = {true} xs={11}> 
             {
-                    is_passed? <Typography> {passed} </Typography> : 
-                    <Typography>
+                    is_passed? <Typography style = {{fontSize: '15px', fontFamily: 'Proxima Nova, sans-serif', fontStyle: "italic"}}> {passed} </Typography> : 
+                    <Typography style = {{fontSize: '15px', fontFamily: 'Proxima Nova, sans-serif', fontStyle: "italic"}}>
                         {time_remaining}
                     </Typography> 
                 }
                 </Grid>
-            <Grid item = {true} xs={1}>
-                <IconButton 
-                align = "right" onClick = {() => {
-                    const db = firebase.database();
-                    const updateUser = {};
-                    updateUser['Users/'+ user.uid+'/Completed/'+ productId] = new Date(product.date).getTime();
-                    product.time = new Date(product.date)
-                    db.ref().update(updateUser);
-                    db.ref('Users/'+ user.uid+'/Products/'+ productId).remove();
-                }} 
-                >
-                    <DeleteForeverIcon />
-                </IconButton>
-            </Grid>
           </Grid>
         </CardContent> 
+
+        <IconButton 
+                style = {{ color: "#6699FF", float: 'right', marginRight:'3%', marginBottom: '2%'}} onClick = {() => {
+                    const db = firebase.database();
+                    const updateUser = {};
+                    updateUser['Users/'+ user.uid+'/Completed/'+ productId] = new Date(product.date);
+                    db.ref().update(updateUser);
+                    firebase.database().ref('Products/'+ productId).set(
+                      {
+                          "date": new Date().getTime() ,
+                          "description": product.description, 
+                          "task": product.task,
+                          "time" : new Date()
+                      }
+                    );
+                    db.ref('Users/'+ user.uid+'/Products/'+ productId).remove();
+                }}  
+                >
+                    <CheckCircleIcon style = {{transform:'scale(3)'}}/>
+                </IconButton>
       </Card>
       <ItemForm open = {open}/>
       <Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' >

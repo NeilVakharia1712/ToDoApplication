@@ -42,21 +42,21 @@ const AppDrawer = props => {
 							<Avatar src={props.user.photoURL} style={{ marginBottom: '10px' }}/>
 						</Grid>
 						<Grid item>
-							<Typography variant='body1' style={{color:'white'}}>{props.user.displayName}</Typography>
-							<Typography variant='body2' style={{color:'#F0F0F0'}}>{props.user.email}</Typography>
+							<Typography variant='body1' style={{color:'white', fontFamily: 'Proxima Nova, sans-serif'}}>{props.user.displayName}</Typography>
+							<Typography variant='body2' style={{color:'#F0F0F0', fontFamily: 'Proxima Nova, sans-serif'}}>{props.user.email}</Typography>
 						</Grid>
 					</Grid>
 				</ListItem>
 			</List>
 			<Divider />
 			<List>
-				<ListItem>
+				<ListItem button onClick={() => { props.setPage("active") }}>
 					<ListItemIcon> 
                     <MenuBookIcon />
                     </ListItemIcon>
 					<ListItemText primary = {"Active Notes"} />
 				</ListItem>
-				<ListItem>
+				<ListItem button onClick={() => { props.setPage("completed") }}> 
                     <ListItemIcon> 
                     <AssignmentTurnedInIcon />
                     </ListItemIcon>

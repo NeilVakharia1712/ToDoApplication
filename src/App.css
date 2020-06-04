@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+.FinishIt {
+  font-family: 'Gill Sans'; 
+  font-weight: 600;
+  color: white;
+  letter-spacing: '4px'
+}
+
+.Pro {
+  font-family: 'Gill Sans'; 
+  font-weight: 300;
+  color: white;
+  letter-spacing: '4px';
+  font-style: italic;
+}
+
+.MuiDialog-paperWidthSm {
+  width: 25%;
+  min-width: 340px;
+}
+
+.MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-formControl.MuiInput-formControl {
+  width: 100%;
+}
+
+.MuiTextField-root {
+  width: 100%;
+}
+
+body {
+  height: 100vh;
+}
+
+

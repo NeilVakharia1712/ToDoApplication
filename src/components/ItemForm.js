@@ -14,7 +14,8 @@ import {
 	TextField,
 	Fab,
 	Slide,
-	Fade
+	Fade,
+	IconButton
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add'
@@ -22,6 +23,7 @@ import { addProduct } from '../utils/FirebaseDbUtils'
 import { getUser } from '../utils/FirebaseAuthUtils'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import '../App.css';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -89,20 +91,22 @@ const ItemForm = () => {
 	};
 
 	const addItem = () => {
-        if(product.description && product.task && product.date)
+		var today = new Date().getTime()
+		var input = new Date(product.date).getTime()
+		if(product.description && product.task && product.date && input > today)
             {
                 addProduct(getUser().uid, product)
                 handleClose()
-            }
+			}
         
     };
 
 	return (
 		<div>
 			<div className={classes.root}>
-				<Fab onClick={handleClickOpen} className={classes.fab} color="secondary" aria-label="edit">
-					<AddIcon />
-				</Fab>
+				<IconButton onClick={handleClickOpen} className={classes.fab} style = {{transform: "scale(1.5)",background:'#67A6FC', color:"white"}}aria-label="edit">
+					< LibraryBooksIcon/>
+				</IconButton>
 			</div>
 			<Dialog open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' fullScreen={fullScreen} TransitionComponent={fullScreen ? SlideTransition : FadeTransition}>
 				<DialogTitle id='alert-dialog-title'>Add Task To Your List</DialogTitle>
@@ -119,7 +123,7 @@ const ItemForm = () => {
                                 id="datetime-local"
                                 label="Finish Before"
                                 type="datetime-local"
-                                defaultValue="2017-05-24T10:30"
+                                defaultValue="2020-05-24T10:30"
                                 onChange={handleChange('date')}
                                 className={classes.textField}
                                 InputLabelProps={{
@@ -131,7 +135,7 @@ const ItemForm = () => {
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={() => { handleClose() }}>Cancel</Button>
-					<Button variant="contained" color="secondary" onClick={() => {addItem()}}>Submit</Button>
+					<Button variant="contained" style = {{background:'#67A6FC', color:"white"}} onClick={() => {addItem()}}>Submit</Button>
 				</DialogActions>
 			</Dialog>
 		</div>

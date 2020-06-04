@@ -57,23 +57,18 @@ const TopAppBar = (props) => {
 			<CssBaseline />
 			<ElevationScroll {...props}>
 				<AppBar className={classes.appBar} >
-					<Toolbar>
+					<Toolbar style = {{height: '10%'}}>
 							<AppDrawer setUser={props.setUser} user={props.user} setPage={props.setPage} />
 						<Grid container alignItems="center" justify="space-between">
 							<Grid item = {true}>
 								<Typography>
 								<h1 className={classes.titleText} >
-									<div className={classes.ToDoText}>Finish It </div>
-          				<div className={classes.ProText}>Pro</div>
+									<div className={classes.ToDoText}>FINISH IT </div>
+          				<div className={classes.ProText}>_NOW</div>
           				</h1>
 								</Typography>
 							</Grid>
-							<Grid item = {true} >
-								{
-									props.user ? <LogoutPopover><Avatar src={props.user.photoURL} /></LogoutPopover>
-									: <Button onClick={signInWithGoogle}>Sign In</Button>
-								}
-							</Grid>
+							
 							
 						</Grid>
 					</Toolbar>
