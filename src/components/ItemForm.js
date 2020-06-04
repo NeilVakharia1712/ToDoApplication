@@ -37,9 +37,9 @@ const useStyles = makeStyles(theme => ({
 	fab: {
 		margin: 0,
 		top: 'auto',
-		right: 20,
+		right: 'auto',
 		bottom: 20,
-		left: 'auto',
+		left: 20,
 		position: 'fixed'
 	}
 }));

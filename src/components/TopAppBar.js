@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Grid , Avatar, Button} from '@material-ui/core';
+import { AppBar, Toolbar, Typography, useScrollTrigger, CssBaseline, Grid , Avatar, Button, IconButton} from '@material-ui/core';
 import { signInWithGoogle, getUser } from '../utils/FirebaseAuthUtils';
 import AppDrawer from './AppDrawer';
 import { makeStyles } from "@material-ui/core/styles";
@@ -68,8 +68,6 @@ const TopAppBar = (props) => {
           				</h1>
 								</Typography>
 							</Grid>
-							
-							
 						</Grid>
 					</Toolbar>
 				</AppBar>
