@@ -69,9 +69,9 @@ const NoteCard = ({ noteId, user, setPage}) => {
 		setProgress(0);
 		setnote({
 			task: note.task,
-            description: note.description,
-            date: note.date,
-            time: 'true', 
+      description: note.description,
+      date: note.date,
+      time: 'true', 
 
 		})
 	}
