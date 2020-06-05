@@ -54,17 +54,18 @@ const AppDrawer = props => {
 					<ListItemIcon> 
                     <MenuBookIcon />
                     </ListItemIcon>
-					<ListItemText primary = {"Active Tasks"} />
+					<ListItemText> <Typography style= {{fontWeight : props.page === "active"&&"bolder", transform: props.page === "active" && 'scale(1.2)'}}>Active Task</Typography></ListItemText>
+					
 				</ListItem>
-				<ListItem button onClick={() => { props.setPage("completed") }}> 
+				<ListItem button onClick={() => { props.setPage("active")}}button onClick={() => { props.setPage("completed") }}> 
                     <ListItemIcon> 
                     <AssignmentTurnedInIcon />
                     </ListItemIcon>
-					<ListItemText primary = {"Completed Tasks"}/>
+					<ListItemText> <Typography style= {{fontWeight : props.page === "completed" &&"bolder", transform: props.page === "completed" && 'scale(1.2)'}}>Completed Task</Typography></ListItemText>
 				</ListItem>
 				<ListItem button onClick={() => {signOut()}}>
 					<ListItemIcon><ExitToAppIcon/></ListItemIcon>
-					<ListItemText primary={"Sign Out"} />
+					<ListItemText> <Typography>Sign Out</Typography></ListItemText>
 				</ListItem>
 			</List>
 		</div>

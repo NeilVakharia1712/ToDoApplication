@@ -58,7 +58,7 @@ const TopAppBar = (props) => {
 			<ElevationScroll {...props}>
 				<AppBar className={classes.appBar} >
 					<Toolbar style = {{height: '10%'}}>
-							<AppDrawer setUser={props.setUser} user={props.user} setPage={props.setPage} />
+							<AppDrawer setUser={props.setUser} user={props.user} setPage={props.setPage}  page ={props.page}/>
 						<Grid container alignItems="center" justify="space-between">
 							<Grid item = {true}>
 								<Typography>

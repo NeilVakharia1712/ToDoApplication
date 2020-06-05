@@ -35,7 +35,7 @@ const App = () => {
   
   return (
     <Container disableGutters>
-      <TopAppBar user={user} setPage = {setPage} />
+      <TopAppBar user={user} setPage = {setPage}  page = {page}/>
       { 
         page === "active" ? 
         <div>
