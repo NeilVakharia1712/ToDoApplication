@@ -98,7 +98,3 @@ firebase deploy
 * Change database to be relational instead of using Firebase
 * Allow users to form groups and send tasks to other members of the group
 * Set up a notification system, via email if a task is ending
-
-## Recommended Usage
-* Preferred usage on smartphone (PC/Laptop/tablets are also okay)
-* Use safari or chrome web browser
