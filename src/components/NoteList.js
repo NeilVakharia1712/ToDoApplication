@@ -31,7 +31,7 @@ const NoteList = ({ noteIds , user ,setPage, page}) => {
                 return(
                 <Container>
                 <div style={{ textAlign: 'center', height: '100vh', width: '100%', alignItems: 'center' }}>
-                <img src='Completed.png' alt='closet' style={{ height: '20%', left: '50%', marginTop: '10%' }}></img>
+                <img src='check.png' alt='closet' style={{ height: '20%', left: '50%', marginTop: '10%' }}></img>
                 </div>
                 </Container>
                 )
@@ -77,7 +77,7 @@ const NoteList = ({ noteIds , user ,setPage, page}) => {
         return(
         <Container>
         <div style={{ textAlign: 'center', height: '100vh', width: '100%', alignItems: 'center' }}>
-       <img src='Completed.png' alt='closet' style={{ height: '20%', left: '50%'}}></img>
+       <img src='check.png' alt='closet' style={{ height: '20%', left: '50%'}}></img>
         </div>
         </Container>
         )
